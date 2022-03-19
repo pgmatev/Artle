@@ -11,6 +11,7 @@ class Staff(db.Model, UserMixin):
     username = db.Column(db.String(50), unique=True, nullable=False)
     password = db.Column(db.Text, nullable=False)
 
+
     def __repr__(self):
         return self.username
 
@@ -24,6 +25,8 @@ class User(db.Model):
     password = db.Column(db.Text, nullable=False)
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     is_active = db.Column(db.Boolean, default=False, nullable=False)
+    templates = db.relationship('Template', backref='user', lazy='dynamic')
+
 
     @classmethod
     def lookup(cls, username):
@@ -49,3 +52,89 @@ class User(db.Model):
 
     def __repr__(self):
         return self.username
+
+
+class Template(db.Model):
+    __tablename__ = "templates"
+
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    user_thought = db.Column(db.Text, nullable=True, server_default=None)
+    is_liked = db.Column(db.Boolean, server_default=False)
+    can_like = db.Column(db.Boolean, server_default=False)
+    musics = db.relationship('Music', backref='templates', lazy='dynamic')
+    rhymes = db.relationship('Rhyme', backref='templates', lazy='dynamic')
+    drawings = db.relationship('Drawing', backref='templates', lazy='dynamic')
+    movies = db.relationship('Movie', backref='templates', lazy='dynamic')
+
+
+
+class MusicQuestion(db.Model):
+    __tablename__ = "music_questions"
+
+    id = db.Column(db.Integer, primary_key=True)
+    question = db.Column(db.Text)
+    musics = db.relationship('Music', backref='music_questions', lazy='dynamic')
+
+
+class Music(db.Model):
+    __tablename__ = "musics"
+
+    id = db.Column(db.Integer, primary_key=True)
+    template_id = db.Column(db.Integer, db.ForeignKey('templates.id'), nullable=False)
+    music_question_id = db.Column(db.Integer, db.ForeignKey('music_questions.id'), nullable=False)
+
+
+class RhymeWord(db.Model):
+    __tablename__ = "rhyme_words"
+
+    id = db.Column(db.Integer, primary_key=True)
+    word = db.Column(db.Text)
+    rhymes = db.relationship('Rhyme', backref='rhyme_words', lazy='dynamic')
+
+
+class Rhyme(db.Model):
+    __tablename__ = "rhymes"
+
+    id = db.Column(db.Integer, primary_key=True)
+    template_id = db.Column(db.Integer, db.ForeignKey('templates.id'), nullable=False)
+    rhyme_word_id = db.Column(db.Integer, db.ForeignKey('rhyme_words.id'), nullable=False)
+
+
+class DrawingWord(db.Model):
+    __tablename__ = "draw_words"
+
+    id = db.Column(db.Integer, primary_key=True)
+    word = db.Column(db.Text)
+    rhymes = db.relationship('Draw', backref='drawing_words', lazy='dynamic')
+
+
+class Drawing(db.Model):
+    __tablename__ = "drawings"
+
+    id = db.Column(db.Integer, primary_key=True)
+    template_id = db.Column(db.Integer, db.ForeignKey('templates.id'), nullable=False)
+    drawing_word_id = db.Column(db.Integer, db.ForeignKey('drawing_words.id'), nullable=False)
+
+
+class Movie(db.Model):
+    __tablename__ = "movies"
+
+    id = db.Column(db.Integer, primary_key=True)
+    template_id = db.Column(db.Integer, db.ForeignKey('templates.id'), nullable=False)
+
+
+class QuoteQuestion(db.Model):
+    __tablename__ = "quote_questions"
+
+    id = db.Column(db.Integer, primary_key=True)
+    question = db.Column(db.Text)
+    quotes = db.relationship('Quote', backref='quote_questions', lazy='dynamic')
+
+
+class Quote(db.Model):
+    __tablename__ = "quotes"
+
+    id = db.Column(db.Integer, primary_key=True)
+    template_id = db.Column(db.Integer, db.ForeignKey('templates.id'), nullable=False)
+    music_question_id = db.Column(db.Integer, db.ForeignKey('quote_questions.id'), nullable=False)

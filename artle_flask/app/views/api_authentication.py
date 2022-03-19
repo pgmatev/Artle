@@ -6,10 +6,10 @@ from app.models import User
 from app.decorators import api_key_required
 
 
-api_authentication = Blueprint('api_authentication', __name__)
+api_authentication = Blueprint('api_authentication', __name__, url_prefix='/api/v1/auth')
 
 
-@api_authentication.route('/api/login', methods=['POST'])
+@api_authentication.route('/login', methods=['POST'])
 @api_key_required
 def login():
     req = request.get_json(force=True)
@@ -22,7 +22,7 @@ def login():
     return jsonify(resp), 200
 
 
-@api_authentication.route('/api/register', methods=['POST'])
+@api_authentication.route('/register', methods=['POST'])
 @api_key_required
 def register():
     req = request.get_json(force=True)
@@ -49,7 +49,7 @@ def register():
     return jsonify(resp), 201
 
 
-@api_authentication.route('/api/refresh', methods=['GET'])
+@api_authentication.route('/refresh', methods=['GET'])
 @api_key_required
 def refresh():
     old_token = guard.read_token_from_header()

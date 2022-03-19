@@ -34,6 +34,12 @@ def register_blueprints(app):
     from app.views.api_authentication import api_authentication as api_authentication_blueprint
     app.register_blueprint(api_authentication_blueprint)
 
+    from app.views.api_users_information import api_users_information as api_users_information_blueprint
+    app.register_blueprint(api_users_information_blueprint)
+
+    from app.views.api_tasks import api_tasks as api_tasks_blueprint
+    app.register_blueprint(api_tasks_blueprint)
+
 
 def register_commands(app):
     app.cli.add_command(delete_database)

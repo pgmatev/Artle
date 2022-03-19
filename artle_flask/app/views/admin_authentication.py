@@ -1,15 +1,15 @@
 from flask import Blueprint, request, redirect, url_for, render_template, flash
-from flask_login import login_user, logout_user, login_required, current_user
+from flask_login import login_user, logout_user, login_required
 from werkzeug.security import check_password_hash
 
 from app.models import Staff
 from app.decorators import anonymous_user_required
 
 
-admin_authentication = Blueprint('admin_authentication', __name__)
+admin_authentication = Blueprint('admin_authentication', __name__, url_prefix='/admin')
 
 
-@admin_authentication.route('/admin/login', methods=['GET', 'POST'])
+@admin_authentication.route('/login', methods=['GET', 'POST'])
 @anonymous_user_required
 def login():
     if request.method == 'GET':
@@ -31,7 +31,7 @@ def login():
         return redirect(url_for('admin.index'))
 
 
-@admin_authentication.route('/admin/logout')
+@admin_authentication.route('/logout')
 @login_required
 def logout():
     logout_user()

@@ -59,9 +59,9 @@ class Template(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
-    user_thought = db.Column(db.Text, nullable=True, server_default=None)
-    is_liked = db.Column(db.Boolean, server_default=False)
-    can_like = db.Column(db.Boolean, server_default=False)
+    user_thought = db.Column(db.Text, nullable=True, server_default="Null")
+    is_liked = db.Column(db.Boolean, server_default="False")
+    can_like = db.Column(db.Boolean, server_default="False")
     musics = db.relationship('Music', backref='templates', lazy='dynamic')
     rhymes = db.relationship('Rhyme', backref='templates', lazy='dynamic')
     drawings = db.relationship('Drawing', backref='templates', lazy='dynamic')
@@ -102,11 +102,11 @@ class Rhyme(db.Model):
 
 
 class DrawingWord(db.Model):
-    __tablename__ = "draw_words"
+    __tablename__ = "drawing_words"
 
     id = db.Column(db.Integer, primary_key=True)
     word = db.Column(db.Text)
-    rhymes = db.relationship('Draw', backref='drawing_words', lazy='dynamic')
+    drawings = db.relationship('Drawing', backref='drawing_words', lazy='dynamic')
 
 
 class Drawing(db.Model):

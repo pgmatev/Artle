@@ -37,6 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'artle_platform.apps.ArtlePlatformConfig',
+
 ]
 
 MIDDLEWARE = [
@@ -76,10 +78,10 @@ WSGI_APPLICATION = 'artle.wsgi.application'
 DATABASES = {
    'default': {
        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-      'NAME': 'artle',
+       'NAME': 'artle',
        'USER': 'postgres',
        'PASSWORD': 'postgres',
-      'HOST': 'localhost',
+       'HOST': 'localhost',
        'PORT': '',
    }
 }

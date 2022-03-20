@@ -59,6 +59,7 @@ class Template(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    url = db.Column(db.Text, nullable=True, server_default="Null")
     user_thought = db.Column(db.Text, nullable=True, server_default="Null")
     is_liked = db.Column(db.Boolean, server_default="False")
     can_like = db.Column(db.Boolean, server_default="False")
@@ -66,7 +67,6 @@ class Template(db.Model):
     rhymes = db.relationship('Rhyme', backref='templates', lazy='dynamic')
     drawings = db.relationship('Drawing', backref='templates', lazy='dynamic')
     movies = db.relationship('Movie', backref='templates', lazy='dynamic')
-
 
 
 class MusicSuggestion(db.Model):
@@ -82,7 +82,7 @@ class Music(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     template_id = db.Column(db.Integer, db.ForeignKey('templates.id'), nullable=False)
-    music_suggestion_id = db.Column(db.Integer, db.ForeignKey('music_suggestions.id'), nullable=False)
+    suggestion_id = db.Column(db.Integer, db.ForeignKey('music_suggestions.id'), nullable=False)
 
 
 class RhymeSuggestion(db.Model):
@@ -98,7 +98,7 @@ class Rhyme(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     template_id = db.Column(db.Integer, db.ForeignKey('templates.id'), nullable=False)
-    rhyme_suggestion_id = db.Column(db.Integer, db.ForeignKey('rhyme_suggestions.id'), nullable=False)
+    suggestion_id = db.Column(db.Integer, db.ForeignKey('rhyme_suggestions.id'), nullable=False)
 
 
 class DrawingSuggestion(db.Model):
@@ -114,7 +114,7 @@ class Drawing(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     template_id = db.Column(db.Integer, db.ForeignKey('templates.id'), nullable=False)
-    drawing_suggestion_id = db.Column(db.Integer, db.ForeignKey('drawing_suggestions.id'), nullable=False)
+    suggestion_id = db.Column(db.Integer, db.ForeignKey('drawing_suggestions.id'), nullable=False)
 
 
 class Movie(db.Model):
@@ -137,4 +137,4 @@ class Quote(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     template_id = db.Column(db.Integer, db.ForeignKey('templates.id'), nullable=False)
-    quote_suggestions_id = db.Column(db.Integer, db.ForeignKey('quote_suggestions.id'), nullable=False)
+    suggestions_id = db.Column(db.Integer, db.ForeignKey('quote_suggestions.id'), nullable=False)

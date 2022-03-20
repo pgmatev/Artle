@@ -30,7 +30,21 @@ class _HistoryPageState extends State<HistoryPage> {
         centerTitle: true,
         elevation: 0,
       ),
-      body: Column(),
+      body: Column(
+        children: <Widget>[
+        Padding(
+          padding: const EdgeInsets.only(left: 30.0, top: 20.0, right: 22.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: const <Widget>[
+              Text(
+                'DATE',
+                style: TextStyle(color: Colors.black26),
+              ),
+            ],
+          ),
+        ),
+      ]),
     );
   }
 }

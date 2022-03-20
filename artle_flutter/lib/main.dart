@@ -51,8 +51,8 @@ class MasterWidgetState extends State<MasterWidget> {
     await const FlutterSecureStorage().read(key: 'accessToken') == null
         ? isLogged = false
         : isLogged = true;
-    // return isLogged;
-    return true;
+
+    return isLogged;
   }
 
   @override

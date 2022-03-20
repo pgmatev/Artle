@@ -1,8 +1,9 @@
+import 'package:artle/pages/register_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-// import 'pages/login_page.dart';
-// import 'pages/register_page.dart';
+import '/pages/login_page.dart';
+import '/pages/register_page.dart';
 
 class LandingPage extends StatelessWidget {
   const LandingPage({Key? key}) : super(key: key);
@@ -31,19 +32,20 @@ class LandingPage extends StatelessWidget {
                   style: ElevatedButton.styleFrom(
                     padding: const EdgeInsets.symmetric(horizontal: 35, vertical: 15),
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15.0),
+                      borderRadius: BorderRadius.circular(8.0),
                     ),
                     primary: Theme.of(context).colorScheme.secondary,
                   ),
-                  child: const Text(
+                  child: Text(
                     'Log in',
                     style: TextStyle(
+                      color: Theme.of(context).colorScheme.primary,
                       fontWeight: FontWeight.bold,
                       fontSize: 16,
                     ),
                   ),
                   onPressed: () {
-                    // Get.to(LoginPage());
+                    Get.to(() => LoginPage());
                   }),
                 const SizedBox(
                   height: 16,
@@ -51,7 +53,7 @@ class LandingPage extends StatelessWidget {
                 const Text('or'),
                 TextButton(
                   onPressed: () {
-                    // Get.to(RegisterPage());
+                    Get.to(() => RegisterPage());
                   },
                   child: const Text(
                     'Register',

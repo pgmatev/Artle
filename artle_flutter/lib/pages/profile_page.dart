@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 // import '../controllers/user_controller.dart';
-// import '../controllers/authentication_controller.dart';
+import '../controllers/authentication_controller.dart';
 import '../main.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -33,9 +33,9 @@ class _ProfilePageState extends State<ProfilePage> {
             color: Theme.of(context).colorScheme.primary,
             icon: const Icon(Icons.logout),
             onPressed: () async {
-              // if (await AuthenticationController().logoutUser()) {
-                Get.offAll(const MasterWidget());
-              // }
+              if (await AuthenticationController().logoutUser()) {
+                Get.offAll(() => const MasterWidget());
+              }
             },
           )
         ],

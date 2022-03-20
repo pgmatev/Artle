@@ -41,9 +41,9 @@ class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
         currentIndex: _currentIndex,
         items: const [
           BottomNavigationBarItem(
-            icon: Icon(Icons.credit_card_outlined),
+            icon: Icon(Icons.access_time),
             label: "Payments",
-            activeIcon: Icon(Icons.credit_card),
+            activeIcon: Icon(Icons.access_time_filled),
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.home_outlined),

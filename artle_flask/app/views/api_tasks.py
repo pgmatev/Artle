@@ -18,6 +18,13 @@ from sqlalchemy.orm import load_only
 api_tasks = Blueprint('api_tasks', __name__, url_prefix='/api/v1/tasks')
 
 
+def get_quote():
+    quote_response = requests.get("https://api.quotable.io/random")
+    s = quote_response.json().get('content') + " - " + quote_response.json().get('author')
+
+    return s
+
+
 def get_spotify_token():
     return requests.post('https://accounts.spotify.com/api/token', data={'grant_type': "client_credentials"},
                          auth=(current_app.config['SPOTIFY_USERNAME'], current_app.config['SPOTIFY_PASSWORD']))
@@ -30,15 +37,9 @@ def rand_search_query():
 
 def get_music():
     token = get_spotify_token().json()
-    print("Spotify token: ", token)
     spotify_response = requests.get(f"https://api.spotify.com/v1/search?q={rand_search_query()}&type=track",
                                     headers={'Authorization': f"Bearer {token.get('access_token')}"})
-    # spotify_json = spotify_response
-    # print("Spotify response: ", spotify_response)
 
-    print("Spotify response: ", spotify_response.json().get('tracks').get('items')[0].get('external_urls').get('spotify'))
-    # print(spotify_json.get('tracks').get('items').get('external_urls').get('spotify'))
-    # return spotify_json.get('tracks').get('items').get('external_urls').get('spotify')
     return spotify_response.json().get('tracks').get('items')[0].get('href')
 
 
@@ -50,23 +51,21 @@ def generate_task():
     random.seed(urandom(128))
     choice = random.choice(available_tasks)
 
-    print(choice)
-
     if hasattr(choice, "suggestion_id"):
-        print("is in if!")
         suggestion = globals()[f"{choice.__name__}Suggestion"].query.options(load_only('id')).offset(
             func.floor(
                 func.random() *
                 db.session.query(func.count(globals()[f"{choice.__name__}Suggestion"].id)).scalar_subquery()
             )
-        ).limit(1).one()
+        ).limit(1).one_or_none()
 
-        print(type(suggestion.suggestion), type(choice))
-        if choice.__name__ == "Music":
-            return jsonify(model=choice.__name__, suggestion=suggestion.suggestion, url=get_music()), 200
-
-        return jsonify(model=choice.__name__, suggestion=suggestion.suggestion), 200
-
+        if suggestion:
+            if choice.__name__ == "Music":
+                return jsonify(model=choice.__name__, suggestion=suggestion.suggestion, url=get_music()), 200
+            return jsonify(model=choice.__name__, suggestion=suggestion.suggestion), 200
+        else:
+            if choice.__name__ == "Quote":
+                return jsonify(model=choice.__name__, url=get_quote()), 200
     else:
         return jsonify(model=choice.__name__), 200
 

@@ -70,7 +70,6 @@ class Template(db.Model):
     movies = db.relationship('Movie', backref='templates', lazy='dynamic')
 
 
-
 class MusicSuggestion(db.Model):
     __tablename__ = "music_suggestions"
 
@@ -139,4 +138,4 @@ class Quote(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     template_id = db.Column(db.Integer, db.ForeignKey('templates.id'), nullable=False)
-    suggestions_id = db.Column(db.Integer, db.ForeignKey('quote_suggestions.id'), nullable=False)
+    suggestion_id = db.Column(db.Integer, db.ForeignKey('quote_suggestions.id'), nullable=False)

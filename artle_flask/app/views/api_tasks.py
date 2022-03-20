@@ -1,3 +1,4 @@
+import datetime
 import random
 import requests
 import string
@@ -40,14 +41,17 @@ def get_music():
     spotify_response = requests.get(f"https://api.spotify.com/v1/search?q={rand_search_query()}&type=track",
                                     headers={'Authorization': f"Bearer {token.get('access_token')}"})
 
-    return spotify_response.json().get('tracks').get('items')[0].get('href')
+    return dict(url=spotify_response.json().get('tracks').get('items')[0].get('external_urls').get('spotify'),
+                title=spotify_response.json().get('tracks').get('items')[0].get('name'),
+                image=spotify_response.json().get('tracks').get('items')[0].get('album').get('images')[1].get('url'))
 
 
 @api_tasks.route('/generate', methods=['GET'])
-# @api_key_required
-# @auth_required
+@api_key_required
+@auth_required
 def generate_task():
-    available_tasks = [Quote, Music, Movie, Drawing, Rhyme]
+    # available_tasks = [Quote, Music, Movie, Drawing, Rhyme]
+    available_tasks = [Quote, Music, Rhyme]
     random.seed(urandom(128))
     choice = random.choice(available_tasks)
 
@@ -61,7 +65,9 @@ def generate_task():
 
         if suggestion:
             if choice.__name__ == "Music":
-                return jsonify(model=choice.__name__, suggestion=suggestion.suggestion, url=get_music()), 200
+                music_info = get_music()
+
+                return jsonify(title=music_info.get('title'), url=music_info.get('url'), image=music_info.get('image'), model=choice.__name__, suggestion=suggestion.suggestion), 200
             return jsonify(model=choice.__name__, suggestion=suggestion.suggestion), 200
         else:
             if choice.__name__ == "Quote":
@@ -76,10 +82,9 @@ def generate_task():
 @api_key_required
 @auth_required
 def save_task():
+    print(request.json)
     task = request.get_json()
     print(task)
-    # rhyme_sug = RhymeSuggestion.query.filter_by(suggestion="Наркотици").one()
-    # print(rhyme_sug)
     token = guard.read_token_from_header()
     token_information = guard.extract_jwt_token(token)
     try:
@@ -91,8 +96,8 @@ def save_task():
         else:
             is_likable = False
 
-        template = Template(url=task.get('url'), user_thought=task.get('user_thought'), user_id=token_information["id"],
-                            can_like=is_likable, is_liked=task.get('is_liked'))
+        template = Template(url=task.get('url'), user_thought=task.get('thought'), user_id=token_information["id"],
+                            can_like=is_likable, is_liked=task.get('is_liked'), created_at=datetime.datetime.now())
         db.session.add(template)
         db.session.commit()
 

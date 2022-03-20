@@ -180,7 +180,7 @@ class Quote(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     template_id = db.Column(db.Integer, db.ForeignKey('templates.id'), nullable=False)
-    suggestions_id = db.Column(db.Integer, db.ForeignKey('quote_suggestions.id'), nullable=False)
+    suggestion_id = db.Column(db.Integer, db.ForeignKey('quote_suggestions.id'), nullable=False)
 
     def to_json(self):
         return dict(self.quote_suggestions.to_json(), template=self.template.to_json())

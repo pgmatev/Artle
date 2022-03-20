@@ -63,10 +63,12 @@ class Template(db.Model):
     user_thought = db.Column(db.Text, nullable=True, server_default="Null")
     is_liked = db.Column(db.Boolean, server_default="False")
     can_like = db.Column(db.Boolean, server_default="False")
+    created_at = db.Column(db.DateTime, server_default=db.func.now())
     musics = db.relationship('Music', backref='templates', lazy='dynamic')
     rhymes = db.relationship('Rhyme', backref='templates', lazy='dynamic')
     drawings = db.relationship('Drawing', backref='templates', lazy='dynamic')
     movies = db.relationship('Movie', backref='templates', lazy='dynamic')
+
 
 
 class MusicSuggestion(db.Model):

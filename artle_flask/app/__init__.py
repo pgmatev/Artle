@@ -3,8 +3,8 @@ from flask_admin.menu import MenuLink
 
 from app.commands import create_database, import_initial_data, delete_database, fill_database
 from app.extensions import db, guard, login_manager, admin
-from app.models import User, Staff, Template, Movie, Music, Quote, Rhyme, RhymeWord,\
-    DrawingWord, Drawing, MusicQuestion, QuoteQuestion
+from app.models import User, Staff, Template, Movie, Music, Quote, Rhyme, RhymeSuggestion,\
+    DrawingSuggestion, Drawing, MusicSuggestion, QuoteSuggestion
 from app.views.admin_models import ProtectedModelView
 
 
@@ -28,21 +28,21 @@ def register_admin_views(app):
                                       can_edit=True, can_create=True, can_delete=True))
     admin.add_view(ProtectedModelView(Music, db.session, name='Musics', endpoint='musics', category=task,
                                       can_edit=True, can_create=True, can_delete=True))
-    admin.add_view(ProtectedModelView(MusicQuestion, db.session, name='MusicQuestions', endpoint='music_questions',
+    admin.add_view(ProtectedModelView(MusicSuggestion, db.session, name='MusicQuestions', endpoint='music_questions',
                                       category=task_question, can_edit=True, can_create=True, can_delete=True))
     admin.add_view(ProtectedModelView(Quote, db.session, name='Quotes', endpoint='quotes', category=task,
                                       can_edit=True, can_create=True, can_delete=True))
-    admin.add_view(ProtectedModelView(QuoteQuestion, db.session, name='QuoteQuestions', endpoint='quote_questions',
+    admin.add_view(ProtectedModelView(QuoteSuggestion, db.session, name='QuoteQuestions', endpoint='quote_questions',
                                       category=task_question, can_edit=True, can_create=True, can_delete=True))
     admin.add_view(ProtectedModelView(Movie, db.session, name='Movies', endpoint='movies', category=task,
                                       can_edit=True, can_create=True, can_delete=True))
     admin.add_view(ProtectedModelView(Rhyme, db.session, name='Rhymes', endpoint='rhymes', category=task,
                                       can_edit=True, can_create=True, can_delete=True))
-    admin.add_view(ProtectedModelView(RhymeWord, db.session, name='RhymeWords', endpoint='rhyme_words',
+    admin.add_view(ProtectedModelView(RhymeSuggestion, db.session, name='RhymeWords', endpoint='rhyme_words',
                                       category=task_question, can_edit=True, can_create=True, can_delete=True))
     admin.add_view(ProtectedModelView(Drawing, db.session, name='Drawings', endpoint='drawings', category=task,
                                       can_edit=True, can_create=True, can_delete=True))
-    admin.add_view(ProtectedModelView(DrawingWord, db.session, name='DrawingWords', endpoint='drawing_words',
+    admin.add_view(ProtectedModelView(DrawingSuggestion, db.session, name='DrawingWords', endpoint='drawing_words',
                                       category=task_question, can_edit=True, can_create=True, can_delete=True))
 
     with app.app_context():

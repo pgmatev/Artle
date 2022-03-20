@@ -3,7 +3,7 @@ from flask.cli import with_appcontext
 from werkzeug.security import generate_password_hash
 
 from app.extensions import guard, db
-from app.models import Staff, User, RhymeWord, DrawingWord, MusicQuestion
+from app.models import Staff, User, RhymeSuggestion, DrawingSuggestion, MusicSuggestion
 
 
 @click.command(name='delete_database')
@@ -51,15 +51,15 @@ def each_chunk(stream, separator):
 def fill_database():
     with open('rhymes') as f:
         for chunk in each_chunk(f, ',\n'):
-            word = RhymeWord(word=chunk)
+            word = RhymeSuggestion(suggestion=chunk)
             db.session.add(word)
     with open('drawings') as f1:
         for chunk in each_chunk(f1, ',\n'):
-            word = DrawingWord(word=chunk)
+            word = DrawingSuggestion(suggestion=chunk)
             db.session.add(word)
     with open('songs') as f2:
         for chunk in each_chunk(f2, ',\n'):
-            question = MusicQuestion(question=chunk)
+            question = MusicSuggestion(suggestion=chunk)
             db.session.add(question)
     db.session.commit()
 

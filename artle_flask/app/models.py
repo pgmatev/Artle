@@ -69,12 +69,12 @@ class Template(db.Model):
 
 
 
-class MusicQuestion(db.Model):
-    __tablename__ = "music_questions"
+class MusicSuggestion(db.Model):
+    __tablename__ = "music_suggestions"
 
     id = db.Column(db.Integer, primary_key=True)
-    question = db.Column(db.Text)
-    musics = db.relationship('Music', backref='music_questions', lazy='dynamic')
+    suggestion = db.Column(db.Text)
+    musics = db.relationship('Music', backref='music_suggestions', lazy='dynamic')
 
 
 class Music(db.Model):
@@ -82,15 +82,15 @@ class Music(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     template_id = db.Column(db.Integer, db.ForeignKey('templates.id'), nullable=False)
-    music_question_id = db.Column(db.Integer, db.ForeignKey('music_questions.id'), nullable=False)
+    music_suggestion_id = db.Column(db.Integer, db.ForeignKey('music_suggestions.id'), nullable=False)
 
 
-class RhymeWord(db.Model):
-    __tablename__ = "rhyme_words"
+class RhymeSuggestion(db.Model):
+    __tablename__ = "rhyme_suggestions"
 
     id = db.Column(db.Integer, primary_key=True)
-    word = db.Column(db.Text)
-    rhymes = db.relationship('Rhyme', backref='rhyme_words', lazy='dynamic')
+    suggestion = db.Column(db.Text)
+    rhymes = db.relationship('Rhyme', backref='rhyme_suggestions', lazy='dynamic')
 
 
 class Rhyme(db.Model):
@@ -98,15 +98,15 @@ class Rhyme(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     template_id = db.Column(db.Integer, db.ForeignKey('templates.id'), nullable=False)
-    rhyme_word_id = db.Column(db.Integer, db.ForeignKey('rhyme_words.id'), nullable=False)
+    rhyme_suggestion_id = db.Column(db.Integer, db.ForeignKey('rhyme_suggestions.id'), nullable=False)
 
 
-class DrawingWord(db.Model):
-    __tablename__ = "drawing_words"
+class DrawingSuggestion(db.Model):
+    __tablename__ = "drawing_suggestions"
 
     id = db.Column(db.Integer, primary_key=True)
-    word = db.Column(db.Text)
-    drawings = db.relationship('Drawing', backref='drawing_words', lazy='dynamic')
+    suggestion = db.Column(db.Text)
+    drawings = db.relationship('Drawing', backref='drawing_suggestions', lazy='dynamic')
 
 
 class Drawing(db.Model):
@@ -114,7 +114,7 @@ class Drawing(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     template_id = db.Column(db.Integer, db.ForeignKey('templates.id'), nullable=False)
-    drawing_word_id = db.Column(db.Integer, db.ForeignKey('drawing_words.id'), nullable=False)
+    drawing_suggestion_id = db.Column(db.Integer, db.ForeignKey('drawing_suggestions.id'), nullable=False)
 
 
 class Movie(db.Model):
@@ -124,12 +124,12 @@ class Movie(db.Model):
     template_id = db.Column(db.Integer, db.ForeignKey('templates.id'), nullable=False)
 
 
-class QuoteQuestion(db.Model):
-    __tablename__ = "quote_questions"
+class QuoteSuggestion(db.Model):
+    __tablename__ = "quote_suggestions"
 
     id = db.Column(db.Integer, primary_key=True)
-    question = db.Column(db.Text)
-    quotes = db.relationship('Quote', backref='quote_questions', lazy='dynamic')
+    suggestion = db.Column(db.Text)
+    quotes = db.relationship('Quote', backref='quote_suggestions', lazy='dynamic')
 
 
 class Quote(db.Model):
@@ -137,4 +137,4 @@ class Quote(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     template_id = db.Column(db.Integer, db.ForeignKey('templates.id'), nullable=False)
-    music_question_id = db.Column(db.Integer, db.ForeignKey('quote_questions.id'), nullable=False)
+    quote_suggestions_id = db.Column(db.Integer, db.ForeignKey('quote_suggestions.id'), nullable=False)

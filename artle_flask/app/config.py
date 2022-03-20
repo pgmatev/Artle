@@ -20,3 +20,5 @@ PRAETORIAN_RESET_URI = f'http://{os.environ.get("SERVER_NAME")}/reset'
 JWT_ACCESS_LIFESPAN = pendulum.duration(hours=1)
 
 ARTLEAPI_KEY = os.environ.get('ARTLEAPI_KEY')
+
+JSON_AS_ASCII = False

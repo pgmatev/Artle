@@ -11,7 +11,7 @@ class MovieTaskWidget extends StatelessWidget {
       children: [
         Container(
           child: const Text(
-            "How do you feel about this song?",
+            "How do you feel about this movie?",
             style: TextStyle(
               fontSize: 30,
               fontWeight: FontWeight.bold,

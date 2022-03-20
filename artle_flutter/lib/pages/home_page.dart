@@ -27,6 +27,7 @@ class _HomePageState extends State<HomePage>
     super.initState();
 
     taskController.generateTask();
+    print("initn");
     print(taskController.currentTask.value.model);
   }
 
@@ -38,9 +39,13 @@ class _HomePageState extends State<HomePage>
   @override
   void setState(fn) {
     super.setState(fn);
+    // taskController.generateTask();
+    print("state changed home");
+    print(taskController.currentTask.value.model);
   }
 
   Widget? determineWidget() {
+    print(taskController.currentTask.value.model);
     if (taskController.currentTask.value.model == "Music") {
       return const SongTaskWidget();
     }
@@ -94,7 +99,7 @@ class _HomePageState extends State<HomePage>
           ),
         ],
       ),
-      body: determineWidget(),
+      body: Obx(() {return determineWidget()!;}),
     );
   }
 

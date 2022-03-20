@@ -10,18 +10,25 @@ class Task {
     this.suggestion,
     this.thought,
     this.url,
+    this.title,
+    this.image
   });
 
   String? model;
   String? suggestion;
   String? thought;
   String? url;
+  String? title;
+  String? image;
+  bool isLiked = false;
 
   factory Task.fromJson(Map<String, dynamic> json) => Task(
     model: json["model"],
     suggestion: json["suggestion"],
     thought: json["thought"],
     url: json["url"],
+    title: json["title"],
+    image: json["image"],
   );
 
   Map<String, dynamic> toJson() => {
@@ -29,5 +36,8 @@ class Task {
     "suggestion": suggestion,
     "thought": thought,
     "url": url,
+    "is_liked": isLiked,
+    "title": title,
+    "image": image,
   };
 }

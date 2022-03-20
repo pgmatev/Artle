@@ -1,51 +1,31 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
-class QuoteTaskWidget extends StatelessWidget {
-  const QuoteTaskWidget({
-    Key? key,
-  }) : super(key: key);
+import '../controllers/task_controller.dart';
+import '../main.dart';
+
+class QuoteTaskWidget extends StatefulWidget {
+  const QuoteTaskWidget({Key? key}) : super(key: key);
+
+  @override
+  _QuoteTaskWidgetState createState() => _QuoteTaskWidgetState();
+}
+
+class _QuoteTaskWidgetState extends State<QuoteTaskWidget> {
+  final TaskController taskController = Get.find<TaskController>();
+  final TextEditingController thoughtController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Container(
-          child: const Text(
-            "How do you feel about this song?",
-            style: TextStyle(
-              fontSize: 30,
-              fontWeight: FontWeight.bold,
-            ),
-            textAlign: TextAlign.center,
-          ),
-          margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.08),
+    return Center(
+      child: Text(
+        taskController.currentTask.value.url!,
+        style: const TextStyle(
+          fontSize: 30,
+          fontWeight: FontWeight.bold,
         ),
-        Container(
-          alignment: Alignment.topCenter,
-          child: ClipRRect(
-            child: const Image(
-              image: NetworkImage('https://flutter.github.io/assets-for-api-docs/assets/widgets/owl.jpg'),
-              height: 150,
-              width: 150,
-            ),
-            borderRadius: BorderRadius.circular(8.0),
-          ),
-          margin: const EdgeInsets.symmetric(vertical: 20),
-        ),
-        const Text(
-          "Drake - God's plan",
-          style: TextStyle(
-            fontSize: 30,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        const Expanded(
-          child: TextField(
-            maxLines: 8,
-            decoration: InputDecoration.collapsed(hintText: "Enter your text here"),
-          ),
-        ),
-      ],
+        textAlign: TextAlign.center,
+      ),
     );
   }
 }
